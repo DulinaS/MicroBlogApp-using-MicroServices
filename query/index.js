@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const axios = require('axios');
 const app = express();
 app.use(bodyParser.json());
 
@@ -22,11 +22,8 @@ const posts = {}; // In-memory data store for posts
 }
  */
 
-//This will recieve events from the event bus and store them in memory
-//Post creation and comment creation events will be handled here
-app.post('/events', (req, res) => {
-    const { type, data } = req.body; // Destructure the event type and data from the request body
-
+//This will handle the events that are received from the event bus
+const handleEvent = (type, data) => {
     if (type === 'PostCreated') {
         const { id, title } = data; // Extract the post ID and title from the event data
         posts[id] = { id, title, comments: [] }; // Store the post in memory with an empty comments array
@@ -54,7 +51,16 @@ app.post('/events', (req, res) => {
             comment.content = content; // Update the content of the comment
         }
     }
-    console.log(posts); // Log the posts object to see the current state of posts and comments
+}
+
+
+//This will recieve events from the event bus and store them in memory
+//Post creation and comment creation events will be handled here
+app.post('/events', (req, res) => {
+    const { type, data } = req.body; // Destructure the event type and data from the request body
+
+    handleEvent(type, data); // Call the handleEvent function to process the event
+    
     res.send({}); // Send an empty response to acknowledge the event
 });
 
@@ -65,6 +71,15 @@ app.get('/posts', (req, res) => {
     res.send(posts); // Send the posts object as a response
 });
 
-app.listen(4002, () => {
+//Listen on port 4002 for incoming requests
+app.listen(4002, async () => {
     console.log('Query service is running on port 4002');
+
+    const res = await axios.get('http://localhost:4005/events');
+    // Loop through all the events received from the event bus and handle them
+    for (let event of res.data) {
+        console.log('Processing event:', event.type); // Log the event type
+        handleEvent(event.type, event.data); // Call the handleEvent function to process the event
+    }
+    
 });
