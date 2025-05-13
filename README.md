@@ -1,18 +1,21 @@
-# MicroBlogPlatform
 
-A microservices-based blogging platform that allows users to create posts and comments, with a built-in content moderation system and event-driven architecture.
+# MicroBlogPlatform 📝
+
+A microservices-based blogging platform where users can create posts and comments, with automatic content moderation — built using an event-driven architecture and now fully Dockerized!
+
+---
 
 ## 🧩 Overview
 
-This project demonstrates a full-stack web application built using microservices. It features:
+This is a full-stack web application that demonstrates microservices design patterns in action. Key features include:
 
-- **Post Creation**
-- **Commenting on Posts**
-- **Content Moderation**
-- **Event-driven Communication**
-- **Query Aggregation for Optimized Frontend Rendering**
+- 📝 Post Creation
+- 💬 Commenting System
+- 🚫 Content Moderation
+- ⚡ Event-Driven Communication via Custom Event Bus
+- 📊 Query Aggregation for Optimized Frontend Rendering
 
-Each service is isolated, runs independently, and communicates via a custom-built event bus.
+Each service is self-contained and runs independently via Docker containers, communicating through a centralized event bus.
 
 ---
 
@@ -21,11 +24,12 @@ Each service is isolated, runs independently, and communicates via a custom-buil
 ```
 WebApp/
 ├── client/         # Frontend React application
-├── posts/          # Service to create and manage posts
-├── comments/       # Service to handle comments on posts
-├── moderation/     # Service to filter inappropriate comments
-├── query/          # Service to aggregate post and comment data
-├── event-bus/      # Service to route events between microservices
+├── posts/          # Post creation & management service
+├── comments/       # Handles comments on posts
+├── moderation/     # Filters inappropriate comments
+├── query/          # Aggregates post and comment data
+├── event-bus/      # Routes events between microservices
+├── docker-compose.yml
 ```
 
 ---
@@ -36,95 +40,99 @@ WebApp/
 - **Backend:** Node.js, Express.js
 - **Architecture:** Microservices
 - **Communication:** Custom Event Bus
-- **Containerization:** Docker (optional)
+- **Containerization:** Docker, Docker Compose
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 🔧 Prerequisites
 
-Ensure you have the following installed:
+Make sure the following are installed on your system:
 
-- [Node.js](https://nodejs.org/en/) (v14+)
-- [npm](https://www.npmjs.com/) (v6+)
-- [Docker](https://www.docker.com/) (optional, for containerization)
+- [Docker](https://www.docker.com/products/docker-desktop)
+- [Docker Compose](https://docs.docker.com/compose/) (usually bundled with Docker Desktop)
 
 ---
 
-### Installation
+### 📦 Installation & Running with Docker
 
-1. Clone the repository:
+1. **Clone the repository:**
 
 ```bash
 git clone https://github.com/DulinaS/WebApp.git
 cd WebApp
 ```
 
-2. Install dependencies for each service:
-
-```bash
-cd client && npm install
-cd ../posts && npm install
-cd ../comments && npm install
-cd ../moderation && npm install
-cd ../query && npm install
-cd ../event-bus && npm install
-```
-
----
-
-### Run All Services Locally
-
-Use separate terminals for each service:
-
-```bash
-cd event-bus && npm start
-cd posts && npm start
-cd comments && npm start
-cd moderation && npm start
-cd query && npm start
-cd client && npm start
-```
-
----
-
-## 🐳 Docker Setup (Optional)
-
-If you prefer running the project in Docker containers, add your own `docker-compose.yml` and Dockerfiles for each service, then run:
+2. **Start all services using Docker Compose:**
 
 ```bash
 docker-compose up --build
 ```
 
+This will build and start the following containers:
+
+- `client` (React frontend)
+- `posts` (Post service)
+- `comments` (Comment service)
+- `moderation` (Content moderation service)
+- `query` (Query service)
+- `event-bus` (Central event handler)
+
+3. **Access the frontend:**
+
+Open your browser and go to: [http://localhost:3000](http://localhost:3000)
+
 ---
 
 ## 🧪 Example Usage
 
-- Create a post from the client UI.
+- Create a new post using the frontend UI.
 - Add comments to the post.
-- Inappropriate words will be detected and replaced via the moderation service.
-- Query service aggregates data and displays it on the client.
+- If a comment contains inappropriate words (e.g., "orange"), it is flagged and replaced by the moderation service.
+- The query service updates the UI with real-time, aggregated data.
+
+---
+
+## 💻 Development (Without Docker)
+
+If you prefer to run the project locally without Docker:
+
+1. Install [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/)
+2. Run each service manually in separate terminals:
+
+```bash
+# In each directory:
+npm install
+npm start
+```
 
 ---
 
 ## 👨‍💻 Contributing
 
+Contributions are welcome! Follow these steps:
+
 1. Fork the repo
-2. Create a new branch: `git checkout -b feature-name`
+2. Create a feature branch: `git checkout -b your-feature-name`
 3. Make your changes
-4. Push your branch: `git push origin feature-name`
-5. Create a pull request
+4. Push the branch: `git push origin your-feature-name`
+5. Create a Pull Request
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License**.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Inspired by event-driven microservices principles
-- Educational microservice design patterns based on real-world use cases
+- Inspired by **event-driven microservice patterns**
+- Based on real-world scalable architecture examples
+- Built for learning, experimentation, and portfolio enhancement
+
+---
+
+🚀 **Happy Building!**
