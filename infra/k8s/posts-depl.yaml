@@ -26,5 +26,6 @@ spec:
     spec: 
       containers:
         - name: posts #Name of the container
-          image: dulina786/posts:0.0.5 #Image to be used for the container
+          image: dulina786/posts:latest #Image to be used for the container
+                 #dulina786/posts also fetch the latest image from docker hub
         
