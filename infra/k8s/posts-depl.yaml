@@ -26,5 +26,5 @@ spec:
     spec: 
       containers:
         - name: posts #Name of the container
-          image: dulina786/posts:0.0.1 #Image to be used for the container
+          image: dulina786/posts:0.0.5 #Image to be used for the container
         
