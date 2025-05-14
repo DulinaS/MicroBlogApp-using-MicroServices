@@ -1,0 +1,13 @@
+#Infra contains all the infrastructure code for the project
+#Related to deployment, configuration of all the services
+#K8s contains all the kubernetes code for the project
+#This create a individual pod for the posts service
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: posts
+spec:
+  containers:
+    - name: posts
+      image: dulina786/posts:0.0.1
