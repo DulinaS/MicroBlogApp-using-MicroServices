@@ -1,0 +1,30 @@
+#Going to create a deployment for the posts service
+#This handles multiple replicas of the posts service
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl #Name of the deployment
+spec:
+  replicas: 1 #Number of replicas of the posts service pods
+
+  #selector is used to select the pods that are managed by this deployment
+  #It tells find the pods with the label app: posts and manage them
+
+  selector:
+    matchLabels:
+      app: posts #Label to match the pods with the deployment
+  
+  #Specifis the pod template that will be used to create the pods
+  #Applies configurations to the pods created by this deployment
+  template:
+    metadata:
+      labels:
+        app: posts #Label to be applied to the pods
+
+    #Includes the information about the container to be used in the pod
+    spec: 
+      containers:
+        - name: posts #Name of the container
+          image: dulina786/posts:0.0.1 #Image to be used for the container
+        
