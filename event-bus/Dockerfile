@@ -1,4 +1,4 @@
-#Here we are creating a Docker image for posts microservice
+#Here we are creating a Docker image for event-bus microservice
 # We are using node:alpine as the base image
 # We are copying the package.json file to the working directory
 # We are installing the dependencies using npm install

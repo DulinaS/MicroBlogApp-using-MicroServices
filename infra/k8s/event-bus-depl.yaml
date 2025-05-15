@@ -1,0 +1,31 @@
+#Going to create a deployment for the event-bus service
+#This handles multiple replicas of the event-bus service
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-bus-depl #Name of the deployment
+spec:
+  replicas: 1 #Number of replicas of the event-bus service pods
+
+  #selector is used to select the pods that are managed by this deployment
+  #It tells find the pods with the label app: event-bus and manage them
+
+  selector:
+    matchLabels:
+      app: event-bus #Label to match the pods with the deployment
+  
+  #Specifis the pod template that will be used to create the pods
+  #Applies configurations to the pods created by this deployment
+  template:
+    metadata:
+      labels:
+        app: event-bus #Label to be applied to the pods
+
+    #Includes the information about the container to be used in the pod
+    spec: 
+      containers:
+        - name: event-bus #Name of the container
+          image: dulina786/event-bus:latest #Image to be used for the container
+                 #dulina786/event-bus also fetch the latest image from docker hub
+        
