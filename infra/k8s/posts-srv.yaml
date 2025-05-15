@@ -1,0 +1,21 @@
+#We are going to creata a NodePort service to expose our posts service
+#This service will be used to access the posts service from outside the cluster
+#what this does is that it creates a port on the node and forwards the traffic to the posts service
+#This is useful for testing purposes
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-srv #Name of the service
+spec:
+  type: NodePort #Type of the service
+
+  #This selector is used to select the pods that are managed by this service
+  #It tells find the pods with the label app: posts and manage them
+  selector:
+    app: posts #Label to match the pods with the service
+  ports:
+    - name: posts #Name of the port
+      protocol: TCP #Protocol to be used for the service
+      port: 4000 #This is the port of the service
+      targetPort: 4000 #This is the port on the pod that the NodePort service will forward traffic to
