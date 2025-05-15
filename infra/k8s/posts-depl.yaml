@@ -28,4 +28,19 @@ spec:
         - name: posts #Name of the container
           image: dulina786/posts:latest #Image to be used for the container
                  #dulina786/posts also fetch the latest image from docker hub
-        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-srv #Name of the service
+spec:
+  selector:
+    app: posts #Label to match the pods with the service
+  type: ClusterIP #Type of the service(Default type if not specified)
+  ports:
+    - name: posts #Name of the port
+      protocol: TCP #Protocol to be used for the service
+      port: 4000 #This is the port of the service
+      targetPort: 4000 #This is the port on the pod that the ClusterIP service will forward traffic to
+      #405 is the port on which the posts service is running
+      #Incoming traffic to this port will be forwarded to the posts service

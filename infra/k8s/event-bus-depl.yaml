@@ -28,4 +28,23 @@ spec:
         - name: event-bus #Name of the container
           image: dulina786/event-bus:latest #Image to be used for the container
                  #dulina786/event-bus also fetch the latest image from docker hub
+---
+#Going to create a Cluster IP service for the event-bus microservice
+#This service will be used to access the event-bus service from inside the cluster
+#This service will be used to access the event-bus service from other microservices
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus-srv #Name of the service
+spec:
+  selector:
+    app: event-bus #Label to match the pods with the service
+  type: ClusterIP #Type of the service(Default type if not specified)
+  ports:
+    - name: event-bus #Name of the port
+      protocol: TCP #Protocol to be used for the service
+      port: 4005 #This is the port of the service
+      targetPort: 4005 #This is the port on the pod that the ClusterIP service will forward traffic to
+      #4005 is the port on which the event-bus service is running
+      #Incoming traffic to this port will be forwarded to the event-bus service
         
