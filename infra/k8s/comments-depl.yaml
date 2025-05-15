@@ -1,0 +1,50 @@
+#Going to create a deployment for the comments service
+#This handles multiple replicas of the comments service
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-depl #Name of the deployment
+spec:
+  replicas: 1 #Number of replicas of the comments service pods
+
+  #selector is used to select the pods that are managed by this deployment
+  #It tells find the pods with the label app: comments and manage them
+
+  selector:
+    matchLabels:
+      app: comments #Label to match the pods with the deployment
+  
+  #Specifis the pod template that will be used to create the pods
+  #Applies configurations to the pods created by this deployment
+  template:
+    metadata:
+      labels:
+        app: comments #Label to be applied to the pods
+
+    #Includes the information about the container to be used in the pod
+    spec: 
+      containers:
+        - name: comments #Name of the container
+          image: dulina786/comments:latest #Image to be used for the container
+                 #dulina786/comments also fetch the latest image from docker hub
+---
+#Going to create a Cluster IP service for the commentsmicroservice
+#This service will be used to access the comments service from inside the cluster
+#This service will be used to access the comments service from other microservices
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-srv #Name of the service
+spec:
+  selector:
+    app: comments #Label to match the pods with the service
+  type: ClusterIP #Type of the service(Default type if not specified)
+  ports:
+    - name: comments #Name of the port
+      protocol: TCP #Protocol to be used for the service
+      port: 4001 #This is the port of the service
+      targetPort: 4001 #This is the port on the pod that the ClusterIP service will forward traffic to
+      #4001 is the port on which the comments service is running
+      #Incoming traffic to this port will be forwarded to the comments service
+        
