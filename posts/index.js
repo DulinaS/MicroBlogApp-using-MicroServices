@@ -37,7 +37,15 @@ app.post('/posts',async (req, res) => {
     posts[id] = { id, title }; // Store the post in memory
 
     // Send an event to the event bus to notify about the new post creation
-    await axios.post('http://localhost:4005/events', {
+    /* await axios.post('http://localhost:4005/events', {
+        type: 'PostCreated',
+        data: { id, title },
+    }).catch((err) => {
+        console.error('Error sending event:', err.message);
+    }); */
+    //THIS URL WON'T Work becuase now event bus is running in a Kubernetes cluster
+    // We have to direct the event to the event bus service(event-bus-srv) URL
+    await axios.post('http://event-bus-srv:4005/events', {
         type: 'PostCreated',
         data: { id, title },
     }).catch((err) => {

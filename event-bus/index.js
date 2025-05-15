@@ -22,10 +22,10 @@ app.post('/events', (req, res) => {
 
     //After receiving an event, the event bus will send the event to all the services that are listening for that event
     //This is done by making a POST request to the appropriate service with the event data
-    axios.post('http://localhost:4000/events', event).catch((err) => {
+    axios.post('http://posts-clusterip-srv:4000/events', event).catch((err) => {
         console.log('Error sending event to Posts service:', err.message);
     });
-    axios.post('http://localhost:4001/events', event).catch((err) => {
+    /* axios.post('http://localhost:4001/events', event).catch((err) => {
         console.log('Error sending event to Comments service:', err.message);
     });
     axios.post('http://localhost:4002/events', event).catch((err) => {
@@ -33,7 +33,7 @@ app.post('/events', (req, res) => {
     });
     axios.post('http://localhost:4003/events', event).catch((err) => {
         console.log('Error sending event to Moderation service:', err.message);
-    });
+    }); */
 
     res.send({ status: 'OK' });
 });
