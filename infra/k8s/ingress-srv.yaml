@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv #Name of the ingress
+spec:
+  ingressClassName: nginx #Ingress class to be used
+  rules:
+    - host: posts.com #Host to be used for the ingress
+      http:
+        paths:
+          - path: /posts #Path to be used for the ingress we're going to send traffic to
+            pathType: Prefix #Path type to be used for the ingress
+            backend:
+              service:
+                name: posts-clusterip-srv #Name of the service to be used for the ingress
+                port:
+                  number: 4000 #Port of the service to be used for the ingress 

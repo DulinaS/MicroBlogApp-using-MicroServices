@@ -20,7 +20,7 @@ spec:
   template:
     metadata:
       labels:
-        app: comments #Label to be applied to the pods
+        app: comments  #Label to be applied to the pods
 
     #Includes the information about the container to be used in the pod
     spec: 
