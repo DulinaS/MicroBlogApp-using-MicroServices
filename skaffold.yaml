@@ -1,0 +1,61 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    #By adding this we're telling skaffold to watch for changes in the k8s folder and deploy them
+    - ./infra/k8s/*
+build:
+  local:
+    #what this does is it will build the image and push it to the local docker daemon
+    #without pushing it to docker hub
+    push: false
+  artifacts:
+    - image: dulina786/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js' #if we make a change to js file in client folder skaffold will directly copy it to POD
+            dest: .
+    - image: dulina786/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js' #if we make a change to js file in comments folder skaffold will directly copy it to POD
+            dest: .
+    - image: dulina786/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js' #if we make a change to js file in posts folder skaffold will directly copy it to POD
+            dest: .
+    - image: dulina786/query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js' #if we make a change to js file in query folder skaffold will directly copy it to POD
+            dest: .
+    - image: dulina786/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js' #if we make a change to js file in event-bus folder skaffold will directly copy it to POD
+            dest: .
+    - image: dulina786/moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '*.js' #if we make a change to js file in moderation folder skaffold will directly copy it to POD
+            dest: .
+
