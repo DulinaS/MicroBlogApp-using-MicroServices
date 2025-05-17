@@ -30,7 +30,7 @@ app.get('/posts', (req, res) => {
 });
 
 // Route to create a new post
-app.post('/posts',async (req, res) => {
+app.post('/posts/create',async (req, res) => {
     const id = randomBytes(4).toString('hex'); // Generate a random ID
     const { title } = req.body; // Extract the title from the request body
 
