@@ -1,34 +1,34 @@
 
 # MicroBlogPlatform 📝
 
-A microservices-based blogging platform where users can create posts and comments, with automatic content moderation — built using an event-driven architecture and now fully Dockerized!
+A microservices-based blogging platform where users can create posts and comments, with automatic content moderation — built using an event-driven architecture. Now fully containerized and orchestrated with **Kubernetes** and **Skaffold** for seamless local development!
 
 ---
 
 ## 🧩 Overview
 
-This is a full-stack web application that demonstrates microservices design patterns in action. Key features include:
+This full-stack application demonstrates real-world microservice patterns:
 
 - 📝 Post Creation
 - 💬 Commenting System
 - 🚫 Content Moderation
-- ⚡ Event-Driven Communication via Custom Event Bus
+- ⚡ Event-Driven Communication via a Custom Event Bus
 - 📊 Query Aggregation for Optimized Frontend Rendering
-
-Each service is self-contained and runs independently via Docker containers, communicating through a centralized event bus.
 
 ---
 
 ## 🏗️ Project Structure
 
 ```
-WebApp/
-├── client/         # Frontend React application
-├── posts/          # Post creation & management service
-├── comments/       # Handles comments on posts
-├── moderation/     # Filters inappropriate comments
-├── query/          # Aggregates post and comment data
-├── event-bus/      # Routes events between microservices
+MicroBlogApp-using-MicroServices/
+├── client/             # React frontend
+├── posts/              # Post creation & management service
+├── comments/           # Handles comments
+├── moderation/         # Filters inappropriate comments
+├── query/              # Aggregates post and comment data
+├── event-bus/          # Routes events between services
+├── infra/              # Kubernetes manifests (Deployments, Services, Ingress)
+├── skaffold.yaml       # Skaffold configuration (in root)
 ├── docker-compose.yml
 ```
 
@@ -40,7 +40,8 @@ WebApp/
 - **Backend:** Node.js, Express.js
 - **Architecture:** Microservices
 - **Communication:** Custom Event Bus
-- **Containerization:** Docker, Docker Compose
+- **Containerization & Orchestration:** Docker, Kubernetes
+- **Dev Workflow:** Skaffold + Ingress-NGINX
 
 ---
 
@@ -48,61 +49,78 @@ WebApp/
 
 ### 🔧 Prerequisites
 
-Make sure the following are installed on your system:
+Make sure you have the following installed:
 
 - [Docker](https://www.docker.com/products/docker-desktop)
-- [Docker Compose](https://docs.docker.com/compose/) (usually bundled with Docker Desktop)
+- [Kubernetes](https://kubernetes.io/docs/tasks/tools/)
+- [Skaffold](https://skaffold.dev/docs/install/)
+- [Ingress-NGINX Controller](https://kubernetes.github.io/ingress-nginx/)
+
+> **Note:** Map `posts.com` to your local machine by adding this line to your `/etc/hosts`:
+>
+> ```
+> 127.0.0.1 posts.com
+> ```
 
 ---
 
-### 📦 Installation & Running with Docker
+### ⚙️ Running with Kubernetes & Skaffold
 
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/DulinaS/WebApp.git
-cd WebApp
+git clone https://github.com/DulinaS/MicroBlogApp-using-MicroServices.git
+cd MicroBlogApp-using-MicroServices
 ```
 
-2. **Start all services using Docker Compose:**
+2. **Ensure your Kubernetes cluster is running** (e.g., via Docker Desktop or Minikube)
+
+3. **Install Ingress-NGINX** (if not already installed):
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/cloud/deploy.yaml
+```
+
+4. **Start development using Skaffold:**
+
+```bash
+skaffold dev
+```
+
+5. **Access the application:**
+
+Visit [http://posts.com](http://posts.com) in your browser.
+
+---
+
+### 🐳 Running with Docker Compose
+
+To run without Kubernetes:
 
 ```bash
 docker-compose up --build
 ```
 
-This will build and start the following containers:
-
-- `client` (React frontend)
-- `posts` (Post service)
-- `comments` (Comment service)
-- `moderation` (Content moderation service)
-- `query` (Query service)
-- `event-bus` (Central event handler)
-
-3. **Access the frontend:**
-
-Open your browser and go to: [http://localhost:3000](http://localhost:3000)
+Then go to: [http://localhost:3000](http://localhost:3000)
 
 ---
 
 ## 🧪 Example Usage
 
-- Create a new post using the frontend UI.
-- Add comments to the post.
-- If a comment contains inappropriate words (e.g., "orange"), it is flagged and replaced by the moderation service.
-- The query service updates the UI with real-time, aggregated data.
+- Create a post
+- Add comments
+- Comments with banned words (e.g., "orange") are flagged and replaced
+- Real-time updates appear via the query service
 
 ---
 
-## 💻 Development (Without Docker)
+## 🧰 Local Development (No Docker)
 
-If you prefer to run the project locally without Docker:
-
-1. Install [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/)
+1. Install [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/)
 2. Run each service manually in separate terminals:
 
 ```bash
-# In each directory:
+cd <service>
 npm install
 npm start
 ```
@@ -111,28 +129,24 @@ npm start
 
 ## 👨‍💻 Contributing
 
-Contributions are welcome! Follow these steps:
-
-1. Fork the repo
-2. Create a feature branch: `git checkout -b your-feature-name`
-3. Make your changes
-4. Push the branch: `git push origin your-feature-name`
-5. Create a Pull Request
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature-name`
+3. Make your changes and commit
+4. Push and create a Pull Request
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License**.
+Licensed under the **MIT License**
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Inspired by **event-driven microservice patterns**
-- Based on real-world scalable architecture examples
-- Built for learning, experimentation, and portfolio enhancement
+- Inspired by modern, event-driven microservice architecture
+- Designed for learning, showcasing, and production readiness
 
 ---
 
-🚀 **Happy Building!**
+🚀 **Build. Learn. Scale.**
